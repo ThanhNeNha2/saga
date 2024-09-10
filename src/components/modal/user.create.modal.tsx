@@ -3,12 +3,15 @@ import Modal from 'react-bootstrap/Modal';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Form from 'react-bootstrap/Form';
 import { useState } from 'react';
+import { useAppDispatch } from '../../redux/hooks';
+import { IsCreatePendingSaga } from '../../redux/User/user.slide';
 
 const UserCreateModal = (props: any) => {
     const { isOpenCreateModal, setIsOpenCreateModal } = props;
 
     const [email, setEmail] = useState<string>("");
     const [name, setName] = useState<string>("");
+    const dispatch = useAppDispatch()
 
     const handleSubmit = () => {
         if (!email) {
@@ -20,7 +23,7 @@ const UserCreateModal = (props: any) => {
             return;
         }
         //call api => call redux
-        console.log({ email, name }) //payload
+ dispatch(IsCreatePendingSaga({email,name}))
     }
 
     return (
