@@ -4,6 +4,8 @@ import Button from "react-bootstrap/Button";
 import UserCreateModal from "./modal/user.create.modal";
 import UserEditModal from "./modal/user.edit.modal";
 import UserDeleteModal from "./modal/user.delete.modal";
+import { IsGetPendingSaga } from "../redux/User/user.slide";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
 
 function UsersTable() {
   const [isOpenCreateModal, setIsOpenCreateModal] = useState<boolean>(false);
@@ -40,6 +42,11 @@ function UsersTable() {
     setDataUser(user);
     setIsOpenDeleteModal(true);
   };
+  const dispatch = useAppDispatch();
+  const isPending = useAppSelector((state) => state.user.isPending);
+  useEffect(() => {
+    dispatch(IsGetPendingSaga());
+  }, []);
 
   return (
     <>
@@ -65,27 +72,31 @@ function UsersTable() {
           </tr>
         </thead>
         <tbody>
-          {users?.map((user) => {
-            return (
-              <tr key={user.id}>
-                <td>{user.id}</td>
-                <td>{user.name}</td>
-                <td>{user.email}</td>
-                <td>
-                  <Button
-                    variant="warning"
-                    onClick={() => handleEditUser(user)}
-                  >
-                    Edit
-                  </Button>
-                  &nbsp;&nbsp;&nbsp;
-                  <Button variant="danger" onClick={() => handleDelete(user)}>
-                    Delete
-                  </Button>
-                </td>
-              </tr>
-            );
-          })}
+          {isPending ? (
+            <tr>Khoong data </tr>
+          ) : (
+            users?.map((user) => {
+              return (
+                <tr key={user.id}>
+                  <td>{user.id}</td>
+                  <td>{user.name}</td>
+                  <td>{user.email}</td>
+                  <td>
+                    <Button
+                      variant="warning"
+                      onClick={() => handleEditUser(user)}
+                    >
+                      Edit
+                    </Button>
+                    &nbsp;&nbsp;&nbsp;
+                    <Button variant="danger" onClick={() => handleDelete(user)}>
+                      Delete
+                    </Button>
+                  </td>
+                </tr>
+              );
+            })
+          )}
         </tbody>
       </Table>
 

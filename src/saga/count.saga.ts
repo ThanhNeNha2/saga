@@ -1,10 +1,11 @@
-import { takeEvery } from "redux-saga/effects";
-function* handleSaga() {
-  console.log("tao chayj vafo dayroi nha ");
+import { put, takeEvery } from "redux-saga/effects";
+import { incrementSaga } from "../redux/counter/counter.slide";
+function* handleSaga(action: any) {
+  yield put(incrementSaga(2));
 }
 
 function* RootSaga() {
-  yield takeEvery("*", handleSaga);
+  yield takeEvery("counter/incrementSagaStart", handleSaga);
 }
 
 export default RootSaga;
