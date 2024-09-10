@@ -35,8 +35,9 @@ export const userSlice = createSlice({
       state.isError = false;
     });
     builder.addCase(IsGetSuccessSaga, (state, action) => {
-      state.isPending = true;
+      state.isPending = false;
       state.isError = false;
+      state.data = action.payload
     });
     builder.addCase(IsGetFailedSaga, (state, action) => {
       state.isPending = true;

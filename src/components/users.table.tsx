@@ -15,23 +15,7 @@ function UsersTable() {
 
   const [isOpenDeleteModal, setIsOpenDeleteModal] = useState<boolean>(false);
 
-  const users = [
-    {
-      id: 1,
-      name: "Eric",
-      email: "eric@gmail.com",
-    },
-    {
-      id: 2,
-      name: "Dev",
-      email: "dev@gmail.com",
-    },
-    {
-      id: 3,
-      name: "Dev",
-      email: "admin@gmail.com",
-    },
-  ];
+
 
   const handleEditUser = (user: any) => {
     setDataUser(user);
@@ -44,6 +28,9 @@ function UsersTable() {
   };
   const dispatch = useAppDispatch();
   const isPending = useAppSelector((state) => state.user.isPending);
+  const data = useAppSelector((state) => state.user.data);
+  const users =  data
+
   useEffect(() => {
     dispatch(IsGetPendingSaga());
   }, []);
